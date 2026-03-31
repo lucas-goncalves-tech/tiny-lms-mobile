@@ -4,7 +4,7 @@
     "slug": "tiny-lms",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/images/ios-light.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "tinylms",
     "backgroundColor": "#050406",
     "userInterfaceStyle": "dark",
@@ -17,7 +17,7 @@
       "package": "com.drummonds.tinylms",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "foregroundImage": "./assets/images/android-icon-foreground.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
