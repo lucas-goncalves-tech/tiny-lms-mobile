@@ -1,10 +1,10 @@
 import { Image } from "expo-image";
 
-export default function Logo() {
+export default function Logo({ size = 100 }: { size?: number }) {
   return (
     <Image
       source={require("../../assets/images/logo.svg")}
-      style={{ width: 100, height: 100 }}
+      style={{ width: size, height: size }}
       contentFit="contain"
     />
   );

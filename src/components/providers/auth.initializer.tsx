@@ -22,6 +22,7 @@ export default function AuthInitializer({ children }: PropsWithChildren) {
           if (decoded.exp && decoded.exp < now) {
             await SecureStore.deleteItemAsync("token");
             signout();
+            return;
           }
           signin();
         }
