@@ -1,3 +1,4 @@
+import AuthInitializer from "@/components/providers/auth.initializer";
 import "../../global.css";
 
 import { Stack } from "expo-router";
@@ -10,19 +11,21 @@ export default function RootLayout() {
     "--background",
   ]) as string[];
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: headerBackground,
-        },
-        headerTintColor: foreground,
-        headerShadowVisible: false,
-        contentStyle: {
-          backgroundColor: background,
-        },
-      }}
-    >
-      <Stack.Screen name="index" options={{ title: "Home" }} />
-    </Stack>
+    <AuthInitializer>
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: headerBackground,
+          },
+          headerTintColor: foreground,
+          headerShadowVisible: false,
+          contentStyle: {
+            backgroundColor: background,
+          },
+        }}
+      >
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+      </Stack>
+    </AuthInitializer>
   );
 }

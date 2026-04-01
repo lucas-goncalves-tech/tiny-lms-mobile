@@ -29,17 +29,12 @@ export default function AuthInitializer({ children }: PropsWithChildren) {
         signout();
       } finally {
         setIsReady(true);
+        SplashScreen.hideAsync();
       }
     }
 
     authCheck();
   }, [signin, signout]);
-
-  useEffect(() => {
-    if (isReady) {
-      SplashScreen.hideAsync();
-    }
-  }, [isReady]);
 
   if (!isReady) {
     return null;
