@@ -1,7 +1,7 @@
 import axios from "axios";
 import { env } from "@/config/env.config";
 import * as SecureStore from "expo-secure-store";
-import { router } from "expo-router";
+import { TOKEN_KEY, useAuthStore } from "@/store/auth-store";
 
 export const apiClient = axios.create({
   baseURL: env.EXPO_PUBLIC_API_URL,
@@ -9,7 +9,7 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use(async (config) => {
   try {
-    const token = await SecureStore.getItemAsync("token");
+    const token = await SecureStore.getItemAsync(TOKEN_KEY);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,12 +28,7 @@ apiClient.interceptors.response.use(
       error.response.status === 401 &&
       !originalRequest?.url?.includes("/auth")
     ) {
-      try {
-        await SecureStore.deleteItemAsync("token");
-        router.replace("/signin");
-      } catch (error) {
-        console.warn("Error clearing token:", error);
-      }
+      await useAuthStore.getState().signout();
     }
     return Promise.reject(error);
   },
