@@ -5,17 +5,27 @@ import { MotiView } from "moti";
 import { Easing } from "react-native-reanimated";
 import { useAuthStore } from "@/store/auth-store";
 import useGetMe from "@/hooks/use-get-me";
-import { Redirect } from "expo-router";
+import { Redirect, router } from "expo-router";
+import { useEffect, useState } from "react";
 
 const StyledMotiView = withUniwind(MotiView);
 
 export default function SplashScreen() {
+  const [animationEnd, setAnimationEnd] = useState(false);
   const { isAuthenticated } = useAuthStore();
   const { isLoading } = useGetMe(isAuthenticated);
 
-  if (!isLoading && isAuthenticated !== undefined) {
-    return <Redirect href={isAuthenticated ? "/home" : "/signin"} />;
-  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimationEnd(true);
+    }, 1500);
+
+    if (!isLoading && isAuthenticated !== undefined && animationEnd) {
+      router.replace(isAuthenticated ? "/home" : "/signin");
+    }
+
+    return () => clearTimeout(timer);
+  }, [isLoading, isAuthenticated, animationEnd]);
 
   return (
     <View className="items-center justify-center flex-1 gap-8">
