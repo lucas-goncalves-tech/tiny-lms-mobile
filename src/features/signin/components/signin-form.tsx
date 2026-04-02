@@ -1,9 +1,50 @@
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
+import { Button } from "@/components/ui/button";
+import EmailField from "@/components/ui/input/email-field";
+import PasswordField from "@/components/ui/input/password-field";
+import { Controller } from "react-hook-form";
+
+import ErrorMessage from "@/components/ui/error-message";
+import { useSigninController } from "../hooks/use-signin.controller";
 
 export default function SigninForm() {
+  const { control, errors, handleSubmit, isSubmitting } = useSigninController();
+
   return (
-    <View>
-      <Text>SigninForm</Text>
+    <View className="w-full content-px gap-5">
+      <View className="gap-2">
+        <Text className="text-white">Email</Text>
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, ...rest } }) => (
+            <EmailField onChangeText={onChange} {...rest} />
+          )}
+        />
+        <ErrorMessage message={errors.email?.message} />
+      </View>
+
+      <View className="gap-2">
+        <Text className="text-white">Senha</Text>
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, ...rest } }) => (
+            <PasswordField onChangeText={onChange} {...rest} />
+          )}
+        />
+        <ErrorMessage message={errors.password?.message} />
+      </View>
+
+      <Button.Root disabled={isSubmitting} onPress={handleSubmit}>
+        <Button.Text>
+          {isSubmitting ? (
+            <ActivityIndicator />
+          ) : (
+            <Button.Text>Entrar</Button.Text>
+          )}
+        </Button.Text>
+      </Button.Root>
     </View>
   );
 }

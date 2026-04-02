@@ -12,7 +12,7 @@ export default function Signin() {
   return (
     <StyledSafeAreaView className="flex-1 items-center justify-center gap-12">
       <View className="items-center gap-4">
-        <Logo size={80} />
+        <Logo size={50} />
         <View className="items-center gap-2">
           <Heading size="xl">Tiny LMS</Heading>
           <View className="w-6 h-1 bg-linear-to-r from-primary to-secondary rounded-4" />
