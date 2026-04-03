@@ -7,9 +7,9 @@ import { Controller } from "react-hook-form";
 import ErrorMessage from "@/components/ui/error-message";
 import { useSigninController } from "../hooks/use-signin.controller";
 
-export default function SigninForm() {
-  const { control, errors, handleSubmit, isSubmitting } = useSigninController();
+export type SigninFormProps = ReturnType<typeof useSigninController>;
 
+export default function SigninForm({ control, errors, handleSubmit, isSubmitting }: SigninFormProps) {
   return (
     <View className="w-full content-px gap-5">
       <View className="gap-2">

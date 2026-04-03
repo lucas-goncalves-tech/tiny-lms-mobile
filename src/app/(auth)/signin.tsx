@@ -3,9 +3,12 @@ import Heading from "@/components/ui/heading";
 import Muted from "@/components/ui/muted";
 import { StyledSafeAreaView } from "@/components/ui/styled-safe-area-view";
 import SigninForm from "@/features/signin/components/signin-form";
+import { useSigninController } from "@/features/signin/hooks/use-signin.controller";
 import { View } from "react-native";
 
 export default function Signin() {
+  const controllerProps = useSigninController();
+
   return (
     <StyledSafeAreaView className="flex-1 items-center justify-center gap-12">
       <View className="items-center gap-4">
@@ -23,7 +26,7 @@ export default function Signin() {
         <Muted size="md">Continue sua jornada de aprendizado.</Muted>
       </View>
 
-      <SigninForm />
+      <SigninForm {...controllerProps} />
     </StyledSafeAreaView>
   );
 }
