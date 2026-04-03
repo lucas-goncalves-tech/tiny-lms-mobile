@@ -48,8 +48,6 @@ export default function SigninForm({
           <Button.Text>Entrar</Button.Text>
         )}
       </Button.Root>
-
-      <View></View>
     </View>
   );
 }
