@@ -16,7 +16,7 @@ export default function SigninForm({
   isSubmitting,
 }: SigninFormProps) {
   return (
-    <View className="w-full content-px gap-5">
+    <View className="w-full gap-5">
       <View className="gap-2">
         <Text className="text-white">Email</Text>
         <Controller
