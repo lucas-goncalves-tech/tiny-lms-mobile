@@ -13,7 +13,7 @@ type ButtonContext = {
 
 const buttonContext = createContext<ButtonContext | undefined>(undefined);
 
-const buttonVariants = cva("rounded-base py-3", {
+const buttonVariants = cva("rounded-base", {
   variants: {
     variant: {
       primary: "button-gradient",
@@ -45,6 +45,7 @@ export default function ButtonRoot({
         state={scaleState}
       >
         <Pressable
+          className="py-3 rounded-base"
           onPressIn={() => scaleState.transitionTo("pressed")}
           onPressOut={() => scaleState.transitionTo("from")}
           {...props}
