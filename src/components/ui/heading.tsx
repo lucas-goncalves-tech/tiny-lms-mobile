@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 type Props = TextProps & VariantProps<typeof headingVariants>;
 
-const headingVariants = cva("text-foreground", {
+const headingVariants = cva("text-foreground leading-tight", {
   variants: {
     size: {
       "4xl": "text-4xl",
