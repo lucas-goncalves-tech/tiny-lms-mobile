@@ -4,6 +4,7 @@ import { Pressable, PressableProps } from "react-native";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { createContext, useContext } from "react";
+import { useScalePress } from "@/hooks/use-scale-press";
 
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
 type Props = PressableProps & ButtonVariants;
@@ -35,6 +36,8 @@ export default function ButtonRoot({
   disabled,
   ...props
 }: Props) {
+  const scaleState = useScalePress();
+
   return (
     <buttonContext.Provider value={{ variantState: variant }}>
       <StyledView
@@ -42,8 +45,15 @@ export default function ButtonRoot({
           disabled && "opacity-50",
           buttonVariants({ variant, className }),
         )}
+        state={scaleState}
       >
-        <Pressable {...props}>{children}</Pressable>
+        <Pressable
+          onPressIn={() => scaleState.transitionTo("pressed")}
+          onPressOut={() => scaleState.transitionTo("from")}
+          {...props}
+        >
+          {children}
+        </Pressable>
       </StyledView>
     </buttonContext.Provider>
   );

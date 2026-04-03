@@ -37,13 +37,11 @@ export default function SigninForm() {
       </View>
 
       <Button.Root disabled={isSubmitting} onPress={handleSubmit}>
-        <Button.Text>
-          {isSubmitting ? (
-            <ActivityIndicator />
-          ) : (
-            <Button.Text>Entrar</Button.Text>
-          )}
-        </Button.Text>
+        {isSubmitting ? (
+          <ActivityIndicator />
+        ) : (
+          <Button.Text>Entrar</Button.Text>
+        )}
       </Button.Root>
     </View>
   );
