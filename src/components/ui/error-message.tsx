@@ -1,4 +1,5 @@
-import { Text, TextProps } from "react-native";
+import { TextProps } from "react-native";
+import Typography from "./typography";
 
 type Props = TextProps & {
   message?: string;
@@ -7,8 +8,8 @@ type Props = TextProps & {
 export default function ErrorMessage({ message, ...props }: Props) {
   if (!message) return null;
   return (
-    <Text className="text-xs text-destructive" {...props}>
+    <Typography variant={"destructive"} size={"xs"} {...props}>
       {message}
-    </Text>
+    </Typography>
   );
 }

@@ -1,6 +1,6 @@
 import Logo from "@/components/logo";
 import Heading from "@/components/ui/heading";
-import Muted from "@/components/ui/muted";
+import Typography from "@/components/ui/typography";
 import { StyledSafeAreaView } from "@/components/ui/styled-safe-area-view";
 import SigninForm from "@/features/signin/components/signin-form";
 import { useSigninController } from "@/features/signin/hooks/use-signin.controller";
@@ -23,7 +23,9 @@ export default function Signin() {
         <Heading size="3xl" weight="extrabold">
           Bem-vindo de volta!
         </Heading>
-        <Muted size="md">Continue sua jornada de aprendizado.</Muted>
+        <Typography size={"base"} variant={"lead"}>
+          Continue sua jornada de aprendizado.
+        </Typography>
       </View>
 
       <SigninForm {...controllerProps} />

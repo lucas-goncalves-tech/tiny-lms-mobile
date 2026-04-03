@@ -9,7 +9,12 @@ import { useSigninController } from "../hooks/use-signin.controller";
 
 export type SigninFormProps = ReturnType<typeof useSigninController>;
 
-export default function SigninForm({ control, errors, handleSubmit, isSubmitting }: SigninFormProps) {
+export default function SigninForm({
+  control,
+  errors,
+  handleSubmit,
+  isSubmitting,
+}: SigninFormProps) {
   return (
     <View className="w-full content-px gap-5">
       <View className="gap-2">
@@ -43,6 +48,8 @@ export default function SigninForm({ control, errors, handleSubmit, isSubmitting
           <Button.Text>Entrar</Button.Text>
         )}
       </Button.Root>
+
+      <View></View>
     </View>
   );
 }
