@@ -15,7 +15,7 @@ export type ToastIcons = Record<
 >;
 
 const toastVariants = cva(
-  "absolute z-50 self-center rounded-base px-4 py-2 flex-row gap-2 items-center",
+  "absolute z-50 self-center rounded-base px-4 py-2 flex-row gap-2 items-center max-w-xs",
   {
     variants: {
       variant: {
@@ -50,7 +50,7 @@ export default function Toaster() {
             translateY: 0,
           }}
           exit={{
-            translateY: -99,
+            translateY: -200,
           }}
           style={{ top: insets.top + 20, elevation: 100 }}
         >
