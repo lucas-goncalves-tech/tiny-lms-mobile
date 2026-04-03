@@ -1,10 +1,9 @@
-import { withUniwind } from "uniwind";
-import { MotiView } from "moti";
 import { Pressable, PressableProps } from "react-native";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { createContext, useContext } from "react";
 import { useScalePress } from "@/hooks/use-scale-press";
+import { StyledMotiView } from "../styled-moti-view";
 
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
 type Props = PressableProps & ButtonVariants;
@@ -13,8 +12,6 @@ type ButtonContext = {
 };
 
 const buttonContext = createContext<ButtonContext | undefined>(undefined);
-
-const StyledView = withUniwind(MotiView);
 
 const buttonVariants = cva("rounded-base py-3", {
   variants: {
@@ -40,7 +37,7 @@ export default function ButtonRoot({
 
   return (
     <buttonContext.Provider value={{ variantState: variant }}>
-      <StyledView
+      <StyledMotiView
         className={cn(
           disabled && "opacity-50",
           buttonVariants({ variant, className }),
@@ -54,7 +51,7 @@ export default function ButtonRoot({
         >
           {children}
         </Pressable>
-      </StyledView>
+      </StyledMotiView>
     </buttonContext.Provider>
   );
 }

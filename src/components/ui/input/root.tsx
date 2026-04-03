@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { createContext, useContext, useState } from "react";
-import { View, ViewProps } from "react-native";
+import { ViewProps } from "react-native";
+import { StyledMotiView } from "../styled-moti-view";
 
 const inputContext = createContext({
   isFocused: false,
@@ -16,7 +17,7 @@ export default function InputRoot({
 
   return (
     <inputContext.Provider value={{ isFocused, setIsFocused }}>
-      <View
+      <StyledMotiView
         className={cn(
           "w-full rounded-base border border-border bg-input px-4 py-2 flex-row items-center gap-2 ",
           className,
@@ -24,7 +25,7 @@ export default function InputRoot({
         {...props}
       >
         {children}
-      </View>
+      </StyledMotiView>
     </inputContext.Provider>
   );
 }

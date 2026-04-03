@@ -1,12 +1,9 @@
 import Logo from "@/components/logo";
 import Heading from "@/components/ui/heading";
 import Muted from "@/components/ui/muted";
+import { StyledSafeAreaView } from "@/components/ui/styled-safe-area-view";
 import SigninForm from "@/features/signin/components/signin-form";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { withUniwind } from "uniwind";
-
-const StyledSafeAreaView = withUniwind(SafeAreaView);
 
 export default function Signin() {
   return (

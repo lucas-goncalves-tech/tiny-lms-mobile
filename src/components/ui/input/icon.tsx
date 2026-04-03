@@ -3,9 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useInput } from "./root";
 import { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
-import { withUniwind } from "uniwind";
-
-const StyledIcons = withUniwind(Ionicons);
+import { StyledIcons } from "../styled-icons";
 
 export default function InputIcon({
   size = 20,

@@ -1,14 +1,11 @@
 import Logo from "@/components/logo";
 import { Text, View } from "react-native";
-import { withUniwind } from "uniwind";
-import { MotiView } from "moti";
 import { Easing } from "react-native-reanimated";
 import { useAuthStore } from "@/store/auth-store";
 import useGetMe from "@/hooks/use-get-me";
-import { Redirect, router } from "expo-router";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
-
-const StyledMotiView = withUniwind(MotiView);
+import { StyledMotiView } from "@/components/ui/styled-moti-view";
 
 export default function SplashScreen() {
   const [animationEnd, setAnimationEnd] = useState(false);
