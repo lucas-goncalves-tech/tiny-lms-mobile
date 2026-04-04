@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import * as SecureStore from "expo-secure-store";
-import { jwtDecode } from "jwt-decode";
 
 export const TOKEN_KEY = "ACCESS_TOKEN";
 
@@ -17,15 +16,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     try {
       const token = await SecureStore.getItemAsync(TOKEN_KEY);
       if (token) {
-        const decoded = jwtDecode(token);
-        const now = Date.now() / 1000;
-
-        if (decoded.exp && decoded.exp < now) {
-          await get().signout();
-          return;
-        }
-        await get().signin(token);
+        return set({ isAuthenticated: true });
       }
+      set({ isAuthenticated: false });
     } catch {
       await get().signout();
     }
