@@ -11,10 +11,7 @@ export function ScreenScroll({
   return (
     <ScrollView
       className={cn("content-px flex-1", className)}
-      contentContainerClassName={cn(
-        "gap-12 justify-center items-center grow",
-        contentContainerClassName,
-      )}
+      contentContainerClassName={cn("grow", contentContainerClassName)}
       keyboardShouldPersistTaps="handled"
       {...props}
     >
