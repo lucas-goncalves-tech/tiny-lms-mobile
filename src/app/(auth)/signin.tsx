@@ -15,7 +15,7 @@ export default function Signin() {
   return (
     <StyledSafeAreaView className="flex-1">
       <KeyboardView>
-        <ScreenScroll>
+        <ScreenScroll contentContainerClassName="gap-8 justify-center items-center">
           <View className="items-center gap-4">
             <Logo size={50} />
             <View className="items-center gap-2">
@@ -24,16 +24,18 @@ export default function Signin() {
             </View>
           </View>
 
-          <View className="items-center">
-            <Heading size="3xl" weight="extrabold">
-              Bem-vindo de volta!
-            </Heading>
-            <Typography size={"base"} variant={"lead"}>
-              Continue sua jornada de aprendizado.
-            </Typography>
-          </View>
+          <View className="gap-6 w-full">
+            <View className="items-center">
+              <Heading size="3xl" weight="extrabold">
+                Bem-vindo de volta!
+              </Heading>
+              <Typography size={"base"} variant={"lead"}>
+                Continue sua jornada de aprendizado.
+              </Typography>
+            </View>
 
-          <SigninForm {...controllerProps} />
+            <SigninForm {...controllerProps} />
+          </View>
 
           <View>
             <Typography>

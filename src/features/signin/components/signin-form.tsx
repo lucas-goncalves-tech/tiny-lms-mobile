@@ -12,30 +12,45 @@ export type SigninFormProps = ReturnType<typeof useSigninController>;
 export default function SigninForm({
   control,
   errors,
+  setFocus,
   handleSubmit,
   isSubmitting,
 }: SigninFormProps) {
   return (
-    <View className="w-full gap-5">
-      <View className="gap-2">
+    <View className="w-full gap-form">
+      <View className="gap-field">
         <Text className="text-white">Email</Text>
         <Controller
           control={control}
           name="email"
           render={({ field: { onChange, ...rest } }) => (
-            <EmailField onChangeText={onChange} {...rest} />
+            <EmailField
+              onChangeText={onChange}
+              {...rest}
+              submitBehavior="submit"
+              returnKeyType="next"
+              onSubmitEditing={() => setFocus("password")}
+            />
           )}
         />
         <ErrorMessage message={errors.email?.message} />
       </View>
 
-      <View className="gap-2">
+      <View className="gap-field">
         <Text className="text-white">Senha</Text>
         <Controller
           control={control}
           name="password"
           render={({ field: { onChange, ...rest } }) => (
-            <PasswordField onChangeText={onChange} {...rest} />
+            <PasswordField
+              onChangeText={onChange}
+              {...rest}
+              submitBehavior="submit"
+              returnKeyType="send"
+              onSubmitEditing={() => {
+                if (!isSubmitting) handleSubmit();
+              }}
+            />
           )}
         />
         <ErrorMessage message={errors.password?.message} />

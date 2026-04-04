@@ -105,6 +105,10 @@
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
 
+  --spacing-field: 0.5rem;   /* gap-2: Espaço entre Label e Input */
+  --spacing-form: 1.25rem;   /* gap-5: Espaço entre blocos de campos */
+  --spacing-section: 1.5rem; /* gap-6: Espaço entre Seções (Header/Form) */
+
   --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
   --tracking-tight: calc(var(--tracking-normal) - 0.025em);
   --tracking-normal: var(--tracking-normal);

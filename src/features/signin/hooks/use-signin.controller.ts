@@ -12,6 +12,7 @@ export function useSigninController() {
     formState: { errors, isSubmitting },
     control,
     handleSubmit,
+    setFocus,
   } = useForm<SignInRequest>({
     resolver: zodResolver(signinRequest),
     defaultValues: {
@@ -26,12 +27,16 @@ export function useSigninController() {
       await signin(res.token);
       router.replace("/home");
     } catch (error) {
-      console.warn(error);
+      if (__DEV__) {
+        // eslint-disable-next-line no-console
+        console.error("[SigninController Error]:", error);
+      }
     }
   };
 
   return {
     errors,
+    setFocus,
     isSubmitting,
     control,
     handleSubmit: handleSubmit(onSubmit),
