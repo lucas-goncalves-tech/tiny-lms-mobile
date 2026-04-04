@@ -4,9 +4,10 @@ import Typography from "@/components/ui/typography";
 import { StyledSafeAreaView } from "@/components/ui/styled-safe-area-view";
 import SigninForm from "@/features/signin/components/signin-form";
 import { useSigninController } from "@/features/signin/hooks/use-signin.controller";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { Link } from "expo-router";
 import KeyboardView from "@/components/keyboard-avoiding-view";
+import { ScreenScroll } from "@/components/ui/screen-scroll";
 
 export default function Signin() {
   const controllerProps = useSigninController();
@@ -14,11 +15,7 @@ export default function Signin() {
   return (
     <StyledSafeAreaView className="flex-1">
       <KeyboardView>
-        <ScrollView
-          className="content-px flex-1"
-          contentContainerClassName="gap-12 justify-center items-center grow"
-          keyboardShouldPersistTaps="handled"
-        >
+        <ScreenScroll>
           <View className="items-center gap-4">
             <Logo size={50} />
             <View className="items-center gap-2">
@@ -46,7 +43,7 @@ export default function Signin() {
               </Link>
             </Typography>
           </View>
-        </ScrollView>
+        </ScreenScroll>
       </KeyboardView>
     </StyledSafeAreaView>
   );
