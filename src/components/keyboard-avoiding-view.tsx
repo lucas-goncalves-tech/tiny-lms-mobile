@@ -1,8 +1,6 @@
 import { cn } from "@/lib/utils";
-import {
-  KeyboardAvoidingView,
-  KeyboardAvoidingViewProps,
-} from "react-native";
+import { KeyboardAvoidingView, KeyboardAvoidingViewProps } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { withUniwind } from "uniwind";
 
 const StyledKeyboardAvoidingView = withUniwind(KeyboardAvoidingView);
@@ -13,10 +11,11 @@ export default function KeyboardView({
   keyboardVerticalOffset = 0,
   ...props
 }: KeyboardAvoidingViewProps) {
+  const insets = useSafeAreaInsets();
   return (
     <StyledKeyboardAvoidingView
       behavior="padding"
-      keyboardVerticalOffset={keyboardVerticalOffset}
+      keyboardVerticalOffset={keyboardVerticalOffset + insets.top}
       className={cn("flex-1 w-full", className)}
       {...props}
     >
