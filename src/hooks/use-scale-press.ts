@@ -1,12 +1,30 @@
-import { useAnimationState } from "moti";
+import {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 export function useScalePress() {
-  return useAnimationState({
-    from: {
-      scale: 1,
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  return {
+    animatedStyle,
+    onPressIn: () => {
+      scale.value = withTiming(0.95, {
+        duration: 200,
+        easing: Easing.inOut(Easing.ease),
+      });
     },
-    pressed: {
-      scale: 0.95,
+    onPressOut: () => {
+      scale.value = withTiming(1, {
+        duration: 200,
+        easing: Easing.inOut(Easing.ease),
+      });
     },
-  });
+  };
 }

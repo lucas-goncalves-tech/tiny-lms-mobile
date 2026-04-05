@@ -1,14 +1,12 @@
 import Typography from "@/components/ui/typography";
 import { Controller } from "react-hook-form";
-import { ActivityIndicator, InteractionManager, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import useSignupController from "../hooks/use-signup.controller";
 import { Input } from "@/components/ui/input";
 import EmailField from "@/components/ui/input/email-field";
 import PasswordField from "@/components/ui/input/password-field";
 import { Button } from "@/components/ui/button";
 import ErrorMessage from "@/components/ui/error-message";
-import { useEffect, useState } from "react";
-import SkeletonSignupForm from "./skeleton-signup-form";
 
 export default function SignupForm({
   handleSubmit,
@@ -17,18 +15,6 @@ export default function SignupForm({
   setFocus,
   isSubmitting,
 }: ReturnType<typeof useSignupController>) {
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => {
-      setIsReady(true);
-    });
-
-    return () => task.cancel();
-  }, []);
-
-  if (!isReady) return <SkeletonSignupForm />;
-
   return (
     <View className="w-full gap-form">
       <View className="gap-field">

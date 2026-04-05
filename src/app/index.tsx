@@ -1,16 +1,35 @@
 import Logo from "@/components/logo";
 import { Text, View } from "react-native";
-import { Easing } from "react-native-reanimated";
+import {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from "react-native-reanimated";
 import { useAuthStore } from "@/store/auth-store";
 import useGetMe from "@/hooks/use-get-me";
-import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyledMotiView } from "@/components/ui/styled-moti-view";
+import { StyledAnimatedView } from "@/components/ui/styled-animated-view";
+import { router } from "expo-router";
 
 export default function SplashScreen() {
   const [animationEnd, setAnimationEnd] = useState(false);
   const { isAuthenticated } = useAuthStore();
   const { isLoading } = useGetMe(isAuthenticated);
+  const rotate = useSharedValue(0);
+
+  useEffect(() => {
+    rotate.value = withRepeat(
+      withTiming(360, { duration: 1000, easing: Easing.linear }),
+      -1,
+      false,
+    );
+  }, [rotate]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotate.value}deg` }],
+  }));
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -27,21 +46,9 @@ export default function SplashScreen() {
   return (
     <View className="items-center justify-center flex-1 gap-8">
       <View className="relative items-center justify-center ">
-        <StyledMotiView
-          key="spin-animation"
-          from={{ rotate: "0deg" }}
-          animate={{ rotate: "360deg" }}
-          transition={{
-            type: "timing",
-            duration: 1000,
-            loop: true,
-            repeatReverse: false,
-            easing: Easing.linear,
-          }}
-          className="absolute"
-        >
-          <View className="size-38 bg-linear-to-r from-primary to-secondary rounded-full" />
-        </StyledMotiView>
+        <StyledAnimatedView style={animatedStyle} className="absolute">
+          <View className="size-38 bg-linear-to-r from-75% from-primary to-5% to-secondary rounded-full" />
+        </StyledAnimatedView>
         <View className="bg-background rounded-full size-34 items-center justify-center">
           <Logo />
         </View>

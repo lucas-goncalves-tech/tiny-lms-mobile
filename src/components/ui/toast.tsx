@@ -1,12 +1,12 @@
 import { useToastStore } from "@/store/toast-store";
 import Typography from "./typography";
-import { StyledMotiView } from "./styled-moti-view";
+import { StyledAnimatedView } from "./styled-animated-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AnimatePresence } from "moti";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Ionicons } from "@expo/vector-icons";
 import { StyledIcons } from "./styled-icons";
+import { SlideInUp, SlideOutUp } from "react-native-reanimated";
 
 export type ToastVariants = VariantProps<typeof toastVariants>;
 export type ToastIcons = Record<
@@ -39,19 +39,12 @@ export default function Toaster() {
   const insets = useSafeAreaInsets();
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
-        <StyledMotiView
+        <StyledAnimatedView
           className={cn(toastVariants({ variant }), className)}
-          from={{
-            translateY: -99,
-          }}
-          animate={{
-            translateY: 0,
-          }}
-          exit={{
-            translateY: -200,
-          }}
+          entering={SlideInUp.duration(600)}
+          exiting={SlideOutUp.duration(300)}
           style={{ top: insets.top + 20, elevation: 100 }}
         >
           <StyledIcons
@@ -59,8 +52,8 @@ export default function Toaster() {
             className="text-foreground text-lg"
           />
           <Typography>{description}</Typography>
-        </StyledMotiView>
+        </StyledAnimatedView>
       )}
-    </AnimatePresence>
+    </>
   );
 }

@@ -1,8 +1,20 @@
 import { cn } from "@/lib/utils";
-import { createContext, memo, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  memo,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { ViewProps } from "react-native";
-import { StyledMotiView } from "../styled-moti-view";
+import { StyledAnimatedView } from "../styled-animated-view";
 import { useUniwindCSS } from "@/components/providers/color-provider";
+import {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 const inputContext = createContext({
   isFocused: false,
@@ -12,22 +24,27 @@ const inputContext = createContext({
 const InputRoot = memo(({ children, className, ...props }: ViewProps) => {
   const { primary, border } = useUniwindCSS();
   const [isFocused, setIsFocused] = useState(false);
+  const borderColor = useSharedValue(border);
 
   const contextValue = useMemo(
     () => ({ isFocused, setIsFocused }),
     [isFocused],
   );
 
+  useEffect(() => {
+    borderColor.value = withTiming(isFocused ? primary : border, {
+      duration: 200,
+    });
+  }, [isFocused, borderColor, primary, border]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    borderColor: borderColor.value,
+  }));
+
   return (
     <inputContext.Provider value={contextValue}>
-      <StyledMotiView
-        animate={{
-          borderColor: isFocused ? primary : border,
-        }}
-        transition={{
-          type: "timing",
-          duration: 200,
-        }}
+      <StyledAnimatedView
+        style={animatedStyle}
         className={cn(
           `w-full rounded-base border-2 bg-input px-4 py-1 flex-row items-center gap-2`,
           className,
@@ -35,7 +52,7 @@ const InputRoot = memo(({ children, className, ...props }: ViewProps) => {
         {...props}
       >
         {children}
-      </StyledMotiView>
+      </StyledAnimatedView>
     </inputContext.Provider>
   );
 });

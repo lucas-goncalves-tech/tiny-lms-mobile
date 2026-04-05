@@ -3,7 +3,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { createContext, memo, useContext } from "react";
 import { useScalePress } from "@/hooks/use-scale-press";
-import { StyledMotiView } from "../styled-moti-view";
+import { StyledAnimatedView } from "../styled-animated-view";
 
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
 type Props = PressableProps & ButtonVariants;
@@ -28,26 +28,26 @@ const buttonVariants = cva("rounded-base", {
 
 const ButtonRoot = memo(
   ({ children, className, variant = "primary", disabled, ...props }: Props) => {
-    const scaleState = useScalePress();
+    const { animatedStyle, onPressIn, onPressOut } = useScalePress();
 
     return (
       <buttonContext.Provider value={{ variantState: variant }}>
-        <StyledMotiView
+        <StyledAnimatedView
           className={cn(
             disabled && "opacity-50",
             buttonVariants({ variant, className }),
           )}
-          state={scaleState}
+          style={animatedStyle}
         >
           <Pressable
             className="py-3 rounded-base"
-            onPressIn={() => scaleState.transitionTo("pressed")}
-            onPressOut={() => scaleState.transitionTo("from")}
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
             {...props}
           >
             {children}
           </Pressable>
-        </StyledMotiView>
+        </StyledAnimatedView>
       </buttonContext.Provider>
     );
   },
