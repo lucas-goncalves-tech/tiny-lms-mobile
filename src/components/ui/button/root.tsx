@@ -1,7 +1,7 @@
 import { Pressable, PressableProps } from "react-native";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { createContext, memo, useContext } from "react";
+import { createContext, memo, useContext, useMemo } from "react";
 import { useScalePress } from "@/hooks/use-scale-press";
 import { StyledAnimatedView } from "../styled-animated-view";
 
@@ -29,9 +29,10 @@ const buttonVariants = cva("rounded-base", {
 const ButtonRoot = memo(
   ({ children, className, variant = "primary", disabled, ...props }: Props) => {
     const { animatedStyle, onPressIn, onPressOut } = useScalePress();
+    const contextValue = useMemo(() => ({ variantState: variant }), [variant]);
 
     return (
-      <buttonContext.Provider value={{ variantState: variant }}>
+      <buttonContext.Provider value={contextValue}>
         <StyledAnimatedView
           className={cn(
             disabled && "opacity-50",
