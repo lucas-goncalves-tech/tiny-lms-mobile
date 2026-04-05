@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
+import { memo } from "react";
 import { Text, TextProps } from "react-native";
 
 type Props = TextProps & VariantProps<typeof textVariant>;
 
-const textVariant = cva("text-base text-foreground font-regular leading-snug", {
+const textVariant = cva("text-base text-foreground font-regular", {
   variants: {
     variant: {
       default: "",
@@ -27,16 +28,15 @@ const textVariant = cva("text-base text-foreground font-regular leading-snug", {
   },
 });
 
-export default function Typography({
-  variant,
-  size,
-  className,
-  children,
-  ...props
-}: Props) {
-  return (
-    <Text className={cn(textVariant({ variant, size, className }))} {...props}>
-      {children}
-    </Text>
-  );
-}
+const Typography = memo(
+  ({ variant, size, className, children, ...props }: Props) => {
+    const styles = textVariant({ variant, size, className });
+    return (
+      <Text className={cn(styles)} {...props}>
+        {children}
+      </Text>
+    );
+  },
+);
+Typography.displayName = "Typography";
+export default Typography;

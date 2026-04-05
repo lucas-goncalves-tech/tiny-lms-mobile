@@ -1,10 +1,11 @@
 import { Text, TextProps } from "react-native";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { memo } from "react";
 
 type Props = TextProps & VariantProps<typeof headingVariants>;
 
-const headingVariants = cva("text-foreground leading-tight", {
+const headingVariants = cva("text-foreground", {
   variants: {
     size: {
       "4xl": "text-4xl",
@@ -26,19 +27,15 @@ const headingVariants = cva("text-foreground leading-tight", {
   },
 });
 
-export default function Heading({
-  size,
-  weight,
-  className,
-  children,
-  ...props
-}: Props) {
-  return (
-    <Text
-      className={cn(headingVariants({ size, weight, className }))}
-      {...props}
-    >
-      {children}
-    </Text>
-  );
-}
+const Heading = memo(
+  ({ size, weight, className, children, ...props }: Props) => {
+    const styles = headingVariants({ size, weight, className });
+    return (
+      <Text className={cn(styles)} {...props}>
+        {children}
+      </Text>
+    );
+  },
+);
+Heading.displayName = "Heading";
+export default Heading;

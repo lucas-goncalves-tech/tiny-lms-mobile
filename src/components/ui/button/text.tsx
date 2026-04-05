@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Text, TextProps } from "react-native";
 import { cva } from "class-variance-authority";
 import { useButton } from "./root";
+import { memo } from "react";
 
 const textVariants = cva("text-center uppercase", {
   variants: {
@@ -16,11 +17,7 @@ const textVariants = cva("text-center uppercase", {
   },
 });
 
-export default function ButtonText({
-  children,
-  className,
-  ...props
-}: TextProps) {
+const ButtonText = memo(({ children, className, ...props }: TextProps) => {
   const { variantState } = useButton();
   return (
     <Text
@@ -30,4 +27,8 @@ export default function ButtonText({
       {children}
     </Text>
   );
-}
+});
+
+ButtonText.displayName = "ButtonText";
+
+export default ButtonText;

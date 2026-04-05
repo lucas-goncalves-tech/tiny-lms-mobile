@@ -1,10 +1,10 @@
 import { useAuthStore } from "@/store/auth-store";
 import { Redirect, Stack } from "expo-router";
-import { useCSSVariable } from "uniwind";
+import { useUniwindCSS } from "@/components/providers/color-provider";
 
 export default function AuthLayout() {
   const { isAuthenticated } = useAuthStore();
-  const [primary] = useCSSVariable(["--color-primary"]) as string[];
+  const { primary } = useUniwindCSS();
 
   if (isAuthenticated) return <Redirect href={"/home"} />;
   return (

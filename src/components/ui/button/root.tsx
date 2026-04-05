@@ -1,7 +1,7 @@
 import { Pressable, PressableProps } from "react-native";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { createContext, useContext } from "react";
+import { createContext, memo, useContext } from "react";
 import { useScalePress } from "@/hooks/use-scale-press";
 import { StyledMotiView } from "../styled-moti-view";
 
@@ -26,36 +26,36 @@ const buttonVariants = cva("rounded-base", {
   },
 });
 
-export default function ButtonRoot({
-  children,
-  className,
-  variant = "primary",
-  disabled,
-  ...props
-}: Props) {
-  const scaleState = useScalePress();
+const ButtonRoot = memo(
+  ({ children, className, variant = "primary", disabled, ...props }: Props) => {
+    const scaleState = useScalePress();
 
-  return (
-    <buttonContext.Provider value={{ variantState: variant }}>
-      <StyledMotiView
-        className={cn(
-          disabled && "opacity-50",
-          buttonVariants({ variant, className }),
-        )}
-        state={scaleState}
-      >
-        <Pressable
-          className="py-3 rounded-base"
-          onPressIn={() => scaleState.transitionTo("pressed")}
-          onPressOut={() => scaleState.transitionTo("from")}
-          {...props}
+    return (
+      <buttonContext.Provider value={{ variantState: variant }}>
+        <StyledMotiView
+          className={cn(
+            disabled && "opacity-50",
+            buttonVariants({ variant, className }),
+          )}
+          state={scaleState}
         >
-          {children}
-        </Pressable>
-      </StyledMotiView>
-    </buttonContext.Provider>
-  );
-}
+          <Pressable
+            className="py-3 rounded-base"
+            onPressIn={() => scaleState.transitionTo("pressed")}
+            onPressOut={() => scaleState.transitionTo("from")}
+            {...props}
+          >
+            {children}
+          </Pressable>
+        </StyledMotiView>
+      </buttonContext.Provider>
+    );
+  },
+);
+
+ButtonRoot.displayName = "ButtonRoot";
+
+export default ButtonRoot;
 
 export const useButton = () => {
   const context = useContext(buttonContext);

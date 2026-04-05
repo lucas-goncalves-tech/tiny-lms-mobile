@@ -1,42 +1,33 @@
 import { cn } from "@/lib/utils";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, memo, useContext, useMemo, useState } from "react";
 import { ViewProps } from "react-native";
 import { StyledMotiView } from "../styled-moti-view";
-import { useAnimationState } from "moti";
-import { useCSSVariable } from "uniwind";
+import { useUniwindCSS } from "@/components/providers/color-provider";
 
 const inputContext = createContext({
   isFocused: false,
   setIsFocused: (value: boolean) => {},
 });
 
-export default function InputRoot({
-  children,
-  className,
-  ...props
-}: ViewProps) {
-  const [borderColor, primaryColor] = useCSSVariable([
-    "--color-border",
-    "--color-primary",
-  ]) as string[];
+const InputRoot = memo(({ children, className, ...props }: ViewProps) => {
+  const { primary, border } = useUniwindCSS();
   const [isFocused, setIsFocused] = useState(false);
-  const borderState = useAnimationState({
-    from: {
-      borderColor: borderColor,
-    },
-    focused: {
-      borderColor: primaryColor,
-    },
-  });
 
-  useEffect(() => {
-    borderState.transitionTo(isFocused ? "focused" : "from");
-  }, [borderState, isFocused]);
+  const contextValue = useMemo(
+    () => ({ isFocused, setIsFocused }),
+    [isFocused],
+  );
 
   return (
-    <inputContext.Provider value={{ isFocused, setIsFocused }}>
+    <inputContext.Provider value={contextValue}>
       <StyledMotiView
-        state={borderState}
+        animate={{
+          borderColor: isFocused ? primary : border,
+        }}
+        transition={{
+          type: "timing",
+          duration: 200,
+        }}
         className={cn(
           `w-full rounded-base border-2 bg-input px-4 py-1 flex-row items-center gap-2`,
           className,
@@ -47,7 +38,9 @@ export default function InputRoot({
       </StyledMotiView>
     </inputContext.Provider>
   );
-}
+});
+
+InputRoot.displayName = "InputRoot";
 
 export const useInput = () => {
   const context = useContext(inputContext);
@@ -56,3 +49,5 @@ export const useInput = () => {
   }
   return context;
 };
+
+export default InputRoot;
